@@ -3,6 +3,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLDataException;
 import java.sql.SQLException;
 import modelo.Contato;
@@ -28,5 +29,47 @@ public class Banco {
        stmt.close();
    }
    
+   public Contato consultarporId(int id) throws Exception{
+       Contato c = new Contato();
+       String pesq = ("select * from contato where id = ?");
+       PreparedStatement stmt = this.conexao.prepareStatement(pesq);
+       stmt.setInt(1, id);
+       ResultSet rs = stmt.executeQuery();
+       if(rs.next()) {
+          c.setIdContato(Integer.parseInt(rs.getString("id")));
+          c.setNome(rs.getString("nome"));
+          c.setEndereco(rs.getString("endereco"));
+          c.setEmail(rs.getString("email"));
+          c.setTelefone(rs.getString("telefone"));
+          c.setSexo(rs.getString("sexo"));
+          rs.close();
+          stmt.close();
+       }
+       return c;
+       
+   }
+    public Contato consultarporNome(String nome) throws Exception{
+       Contato c = new Contato();
+       String pesq = ("select * from contato where nome = ?");
+       PreparedStatement stmt = this.conexao.prepareStatement(pesq);
+       stmt.setString(1, nome);
+       ResultSet rs = stmt.executeQuery();
+       if(rs.next()) {
+          c.setIdContato(Integer.parseInt(rs.getString("id")));
+          c.setNome(rs.getString("nome"));
+          c.setEndereco(rs.getString("endereco"));
+          c.setEmail(rs.getString("email"));
+          c.setTelefone(rs.getString("telefone"));
+          c.setSexo(rs.getString("sexo"));
+          rs.close();
+          stmt.close();
+       }
+       return c;
+       
+   }
+
+
+
+
    
    }
